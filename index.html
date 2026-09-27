@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testosteron Browser — Сила и Скорость</title>
+    
+    <!-- Подключение шрифта Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Иконки (для примера используем FontAwesome CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           CSS VARIABLES & THEMES
+           ========================================= */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-gradient: linear-gradient(135deg, #3498db, #8e44ad);
+            
+            /* Light Theme Defaults */
+            --bg-color: #f8f9fa;
+            --surface-color: #ffffff;
+            --text-main: #2c3e50;
+            --text-secondary: #5f6368;
+            --border-color: #dcdfe6;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Overrides */
+            --bg-color: #1e1f22;
+            --surface-color: #2b2d30;
+            --text-main: #f8f9fa;
+            --text-secondary: #a9b7c6;
+            --border-color: #3f4246;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --glass-bg: rgba(43, 45, 48, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* =========================================
+           GLOBAL STYLES
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* =========================================
+           HEADER & NAVIGATION
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after { width: 100%; }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle:hover { transform: rotate(15deg); }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Blob Animation */
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--accent-gradient);
+            filter: blur(80px);
+            opacity: 0.2;
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 10s infinite alternate;
+        }
+        .blob-1 { top: -100px; left: -100px; }
+        .blob-2 { bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 50px); }
+        }
+
+        .hero-text {
+            max-width: 50%;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--text-main);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Mockup Browser Window (CSS Only) */
+        .browser-mockup {
+            width: 45%;
+            background: var(--surface-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+            transition: transform 0.5s;
+            position: relative;
+        }
+
+        .browser-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .mockup-header {
+            height: 40px;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 8px;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .mockup-body {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: var(--surface-color);
+            position: relative;
+        }
+        
+        .mockup-logo {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .mockup-search {
+            width: 80%;
+            height: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+        }
+
+        /* =========================================
+           FEATURES SECTION
+           ========================================= */
+        .features {
+            padding: 100px 10%;
+            background: var(--bg-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--surface-color);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer {
+            padding: 50px 10%;
+            background: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-links {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* =========================================
+           ANIMATIONS ON SCROLL
+           ========================================= */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .hero-text { max-width: 100%; margin-bottom: 50px; }
+            .hero h1 { font-size: 2.5rem; }
+            .btn-group { justify-content: center; }
+            .browser-mockup { width: 100%; transform: none; }
+            .browser-mockup:hover { transform: none; }
+            nav { display: none; } /* Simplified for demo */
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            Testosteron
+        </div>
+        <nav>
+            <ul>
+                <li><a href="download.html">Скачать</a></li>
+            </ul>
+        </nav>
+        <button class="theme-toggle" id="theme-btn" title="Сменить тему">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+
+<div class="hero-text hidden">
+    <h1>Браузер с настоящим характером</h1>
+    <p>Молниеносная скорость, встроенная защита и полная свобода действий. Testosteron Browser — выбор тех, кто ценит качество.</p>
+    <div class="btn-group">
+        <a href="download.html" class="btn btn-primary">
+            <i class="fa-solid fa-download"></i> Скачать сейчас
+        </a>
+                <button class="btn btn-outline">Узнать больше</button>
+            </div>
+        </div>
+
+        <div class="browser-mockup hidden">
+            <div class="mockup-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="mockup-body">
+                <i class="fa-brands fa-chrome mockup-logo"></i>
+                <div class="mockup-search"></div>
+                <p style="margin-top: 20px; color: var(--text-secondary);">Testosteron Browser</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title hidden">
+            <h2>Почему мы?</h2>
+            <p>Технологии будущего уже здесь</p>
+        </div>
+
+        <div class="grid">
+            <div class="card hidden">
+                <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h3>Высокая скорость</h3>
+                <p>Оптимизированный движок Chromium обеспечивает мгновенную загрузку страниц даже при слабом интернете.</p>
+            </div>
+            <div class="card hidden">
+                <div class="card-icon"><i class="fa-solid fa-user-secret"></i></div>
+                <h3>Режим Инкогнито</h3>
+                <p>Полная анонимность. Мы не сохраняем историю, куки и данные форм в приватном режиме.</p>
+            </div>
+            <div class="card hidden">
+                <div class="card-icon"><i class="fa-solid fa-palette"></i></div>
+                <h3>Гибкая тема</h3>
+                <p>Переключайтесь между светлой и темной темой одним кликом. Забота о ваших глазах.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-shield-halved"></i> Testosteron
+        </div>
+        <p class="copyright">© 2026 Testosteron Browser. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // 1. Theme Switcher Logic
+        const themeBtn = document.getElementById('theme-btn');
+        const icon = themeBtn.querySelector('i');
+        const body = document.body;
+
+        // Check local storage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            body.setAttribute('data-theme', 'dark');
+            updateIcon('dark');
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // 2. Scroll Animation (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, observerOptions);
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+        // 3. Simple Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

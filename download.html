@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачать Testosteron Browser</title>
+    
+    <!-- Шрифт Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-secondary: #5f6368;
+            --border-color: #dcdfe6;
+            --accent-gradient: linear-gradient(135deg, #3498db, #8e44ad);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1e1f22;
+            --card-bg: #2b2d30;
+            --text-main: #f8f9fa;
+            --text-secondary: #a9b7c6;
+            --border-color: #3f4246;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Фоновые пятна */
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--accent-gradient);
+            filter: blur(100px);
+            opacity: 0.2;
+            border-radius: 50%;
+            z-index: 0;
+            animation: float 8s infinite alternate ease-in-out;
+        }
+        .blob-1 { top: -100px; left: -100px; }
+        .blob-2 { bottom: -100px; right: -100px; animation-delay: -4s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 40px); }
+        }
+
+        /* Карточка загрузки */
+        .download-card {
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--accent-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+        p { color: var(--text-secondary); margin-bottom: 30px; line-height: 1.5; }
+
+        /* Кнопка скачивания */
+        .dl-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-gradient);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dl-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.5);
+        }
+
+        .dl-btn:active { transform: translateY(0); }
+
+        /* Эффект блика на кнопке */
+        .dl-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .dl-btn:hover::after { left: 100%; }
+
+        .file-info {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .file-info span { display: flex; align-items: center; gap: 5px; }
+
+        /* Переключатель темы */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+        .theme-toggle:hover { transform: rotate(20deg); }
+
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <button class="theme-toggle" id="themeBtn" title="Сменить тему">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <div class="download-card">
+        <div class="icon-wrapper">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h1>Testosteron Browser</h1>
+        <p>Последняя версия браузера. Быстрый, безопасный и стильный.</p>
+
+        <!-- КНОПКА СКАЧИВАНИЯ -->
+        <button class="dl-btn" onclick="startDownload()">
+            <i class="fa-solid fa-download"></i>
+            Скачать установщик
+        </button>
+
+        <div class="file-info">
+            <span><i class="fa-solid fa-hard-drive"></i> 189 MB</span>
+            <span><i class="fa-brands fa-windows"></i> Windows</span>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // НАСТРОЙКИ: ВСТАВЬТЕ СЮДА ВАШУ ССЫЛКУ
+        // ==========================================
+        const fileUrl = "https://github.com/WInCommada/testosteron-brower.github.io/releases/download/1.0v/Testosteron.Brower.Setup.Beta.exe"; 
+        // Например: ссылка на Google Drive, Яндекс.Диск или прямой линк на .exe
+        
+        function startDownload() {
+            // Создаем временную ссылку для скачивания
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.setAttribute('download', ''); // Атрибут для принудительного скачивания
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Визуальный эффект на кнопке (опционально)
+            const btn = document.querySelector('.dl-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Загрузка...';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        }
+
+        // Логика смены темы
+        const themeBtn = document.getElementById('themeBtn');
+        const icon = themeBtn.querySelector('i');
+        const body = document.body;
+
+        // Проверка сохраненной темы
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            body.setAttribute('data-theme', 'dark');
+            updateIcon('dark');
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const current = body.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon(next);
+        });
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+    </script>
+</body>
+</html>
